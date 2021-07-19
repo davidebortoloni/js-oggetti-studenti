@@ -1,10 +1,9 @@
-// ES 2
-
-// Dare la possibilità all’utente, attraverso
-// 3 prompt(), di aggiungere un nuovo oggetto studente
-// inserendo nell’ordine: nome, cognome e età.
-
 const addButton = document.getElementById("add-student");
+const inputSection = document.getElementById("input-section");
+const nameInput = document.getElementById("name");
+const surnameInput = document.getElementById("surname");
+const ageInput = document.getElementById("age");
+const confirmButton = document.getElementById("confirm");
 const bestStudent = {
     name: "Davide",
     surname: "Bortoloni",
@@ -47,27 +46,26 @@ print("best-student", bestStudentInfo);
 displayStudent("students", students)
 
 addButton.onclick = function () {
-    let newStudentAge;
-    let newStudentName;
-    let newStudentSurname;
+    inputSection.classList.remove("d-none");
+    this.classList.add("d-none");
+}
+confirmButton.onclick = function () {
+    const newStudentName = nameInput.value.trim();
+    const newStudentSurname = surnameInput.value.trim();
+    const newStudentAge = ageInput.value.trim();
 
-    do {
-        newStudentName = prompt("Enter the name").trim();
-    } while (!isValidName(newStudentName));
-    do {
-        newStudentSurname = prompt("Enter the surname").trim();
-    } while (!isValidSurname(newStudentSurname));
-    do {
-        newStudentAge = prompt("Enter the age").trim();
-    } while (!isValidAge(newStudentAge));
-
-    const newStudent = {
-        name: capitalize(newStudentName),
-        surname: capitalize(newStudentSurname),
-        age: newStudentAge,
-    };
-
-    students.push(newStudent);
-
-    displayStudent("students", students)
+    if (isValidName(newStudentName) && isValidSurname(newStudentSurname) && isValidAge(newStudentAge)) {
+        const newStudent = {
+            name: capitalize(newStudentName),
+            surname: capitalize(newStudentSurname),
+            age: newStudentAge,
+        };
+        students.push(newStudent);
+        displayStudent("students", students)
+        inputSection.classList.add("d-none");
+        addButton.classList.remove("d-none");
+        nameInput.value = "";
+        surnameInput.value = "";
+        ageInput.value = "";
+    }
 };
